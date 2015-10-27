@@ -8,6 +8,7 @@ import os
 from itertools import imap
 
 WORK_DIR = os.getcwd()
+UNIQUES = []
 
 def global_replacement(file_name, origina_word, replace_word):
   '''
@@ -35,5 +36,15 @@ def global_replacement(file_name, origina_word, replace_word):
   file_to_read.close()
   file_to_write.close()
 
-global_replacement('lorem.txt', 'ut', 'XXX')
 
+def make_uniques_list(line):
+  global UNIQUES
+  for symb in '!@#$%^&*()_+=-[]{}.,:;\'\"?':
+    line = line.replace(symb, '')
+  list_of_words = line.split()
+  for each in list_of_words:
+    if each not in UNIQUES:
+      UNIQUES.append(each)
+  return UNIQUES
+
+global_replacement('lorem.txt', 'ut', 'XXX')
