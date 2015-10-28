@@ -5,6 +5,8 @@ Authors:
   Andriy Bondarev
 """
 import os
+
+from collections import defaultdict
 from itertools import imap
 
 WORK_DIR = os.getcwd()
@@ -37,14 +39,25 @@ def global_replacement(file_name, origina_word, replace_word):
   file_to_write.close()
 
 
-def make_uniques_list(line):
+def make_uniques_list(file_name):
   global UNIQUES
-  for symb in '!@#$%^&*()_+=-[]{}.,:;\'\"?':
-    line = line.replace(symb, '')
-  list_of_words = line.split()
-  for each in list_of_words:
-    if each not in UNIQUES:
-      UNIQUES.append(each)
-  return UNIQUES
+  dict_of_uniq = defaultdict(int)
+  path_to_file = os.path.join(WORK_DIR, file_name)
+  file_to_read = open(path_to_file, 'r')
+
+  for line in file_to_read:
+    for symb in '!@#$%^&*()_+=-[]{}.,:;\'\"?':
+      line = line.replace(symb, '')
+    list_of_words = line.split()
+    for each in list_of_words:
+      dict_of_uniq[each] += 1
+      if each not in UNIQUES:
+        UNIQUES.append(each)
+  file_to_read.close()
+  for key, value in dict_of_uniq.iteritems():
+    print key, "-", value
+  print "Uniques array:\n", UNIQUES, "\nUniques words count:\n", len(UNIQUES)
 
 global_replacement('lorem.txt', 'ut', 'XXX')
+
+make_uniques_list('lorem.txt')
