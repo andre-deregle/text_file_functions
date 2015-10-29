@@ -64,4 +64,5 @@ def make_uniques_list(file_name):
 
 global_replacement('at', 'FFF', 'lorem.txt')
 
+
 make_uniques_list('lorem.txt')
