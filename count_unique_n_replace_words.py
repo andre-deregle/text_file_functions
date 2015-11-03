@@ -10,6 +10,7 @@ from collections import defaultdict
 from itertools import imap
 
 WORK_DIR = os.getcwd()
+UNIQUES = []
 
 
 def global_replacement(original_word, replace_word, input_filename, output_filename=''):
